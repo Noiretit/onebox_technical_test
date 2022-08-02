@@ -8,6 +8,7 @@ import { ConcertApiService } from 'src/app/core/services/concert-api.service';
 })
 export class ConcertCatalogComponent implements OnInit {
   public events: any;
+  public loading: boolean = true;
 
   constructor(private concertService: ConcertApiService) {}
 
@@ -19,6 +20,11 @@ export class ConcertCatalogComponent implements OnInit {
     this.concertService.getEvents().subscribe((res: any) => {
       this.events = res;
       this.events.sort((a: any, b: any) => (a.endDate > b.endDate ? 1 : -1));
-    });
+      this.loading = false;
+    }),
+      () => {
+        console.error();
+        this.loading = false;
+      };
   }
 }

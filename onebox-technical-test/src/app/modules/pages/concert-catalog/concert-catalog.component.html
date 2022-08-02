@@ -1,26 +1,35 @@
-<section class="container p-4 pt-5">
+<section class="container p-4 pt-5" *ngIf="!loading; else loadingTemplate">
   <div class="row">
     <ng-container *ngFor="let event of events">
-      <div class="col-12 col-md-6 px-5 mb-3">
+      <div class="col-12 col-lg-6 px-5 mb-3">
         <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">{{ event.title }}</h5>
+          <div
+            class="card-header"
+            routerLink="/shopping-cart/{{ event.id }}"
+            class="pointer p-2"
+          >
+            <h5 class="card-title mb-2">{{ event.title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ event.subtitle }}</h6>
           </div>
           <img
             src="{{ event.image }}"
-            class="card-img-top"
+            class="card-img-top pointer"
             alt="placeholder-image"
+            routerLink="/shopping-cart/{{ event.id }}"
           />
           <div class="card-body">
             <p>
               {{ event.startDate | date: "dd/MM/yyyy" }} -
               {{ event.endDate | date: "dd/MM/yyyy" }}
             </p>
-            <p><span innerHTML="{{ event.description }}"></span></p>
+            <p class="v-only-big">
+              <span innerHTML="{{ event.description }}"></span>
+            </p>
           </div>
           <div class="card-footer bg-primary">
-            <span class="text-white" routerLink="/shopping-cart/{{ event.id }}"
+            <span
+              class="text-white pointer"
+              routerLink="/shopping-cart/{{ event.id }}"
               ><b>Comprar</b></span
             >
           </div>
@@ -29,3 +38,7 @@
     </ng-container>
   </div>
 </section>
+
+<ng-template #loadingTemplate>
+  <app-loading></app-loading>
+</ng-template>
