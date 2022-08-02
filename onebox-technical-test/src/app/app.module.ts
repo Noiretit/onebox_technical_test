@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiModule } from './core/services/api.module';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { LoadingComponent } from './shared/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FooterComponent } from './shared/footer/footer.component';
     ShoppingCartComponent,
     HeaderComponent,
     FooterComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
