@@ -1,29 +1,77 @@
-<section class="container">
-  <div class="row">
-    <div class="col-6">
-      <h2>Disponibilidad para el evento de {{ eventInfo.event.title }}</h2>
-      <div
-        class="v-shopping-cart p-3"
-        *ngIf="availableEvent; else notAvailableTemplate"
-      >
-        <div *ngFor="let session of eventInfo.sessions">
+<section class="container my-4" *ngIf="!loading; else loadingTemplate">
+  <div class="v-shopping-cart__go-back">
+    <span routerLink="/catalog">Volver</span>
+  </div>
+  <div class="row" *ngIf="availableEvent; else notAvailableTemplate">
+    <div class="col-xl-1 col-9"></div>
+    <div class="col-xl-5 col-12 mt-3">
+      <div class="v-shopping-cart p-3">
+        <div *ngFor="let session of actualVisitedEvent.sessions">
           <div class="row">
-            <div class="col-6 v-shopping-cart__availability">
+            <div class="col-9 v-shopping-cart__availability">
               <p>Fecha: {{ session.date | date: "dd/MM/yyyy" }},</p>
               <p>Disponibilidad: {{ session.availability }}</p>
             </div>
-            <div class="text-end col-6">
-              <i class="bi bi-dash"></i>
-              <i class="bi bi-plus"></i>
+            <div class="text-end col-3 d-flex">
+              <div
+                (click)="
+                  addOrDeductTicket(eventInfo.event, session.date, 'deduct')
+                "
+              >
+                <i class="bi bi-dash"></i>
+              </div>
+              <ng-container *ngIf="session.booked; else notBookedTemplate">
+                {{ session.booked }}
+              </ng-container>
+              <ng-template #notBookedTemplate>0</ng-template>
+              <div
+                (click)="
+                  addOrDeductTicket(eventInfo.event, session.date, 'add')
+                "
+              >
+                <i class="bi bi-plus"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <ng-template #notAvailableTemplate>
-        <h1>EVENT INFO NOT FOUND</h1>
+    </div>
+    <div class="col-xl-4 col-12 mt-3">
+      <div *ngIf="shoppingCart.length > 0; else emptyCartTemplate">
+        <div *ngFor="let event of shoppingCart; let i = index">
+          <h2 *ngIf="event.hasBookings">{{ event.event.title }}</h2>
+          <ng-container *ngFor="let dates of event.sessions">
+            <ng-container *ngIf="dates.booked">
+              <div class="v-shopping-cart__cart">
+                <span>{{ dates.date | date: "dd/MM/yyyy" }}</span>
+                <div>
+                  <span style="padding-right: 1rem">x{{ dates.booked }}</span>
+                  <img
+                    src="../../../../assets/img/trash.png"
+                    width="20px"
+                    (click)="
+                      addOrDeductTicket(event.event, dates.date, 'deduct')
+                    "
+                  />
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <ng-template #emptyCartTemplate>
+        <h4>Carro vacío</h4>
       </ng-template>
     </div>
-    <div class="col-6"></div>
+    <div class="col-xl-2 col-0"></div>
   </div>
+  <ng-template #notAvailableTemplate>
+    <div class="text-center mt-5">
+      <h1>EVENT INFO NOT FOUND</h1>
+    </div>
+  </ng-template>
 </section>
+
+<ng-template #loadingTemplate>
+  <app-loading></app-loading>
+</ng-template>

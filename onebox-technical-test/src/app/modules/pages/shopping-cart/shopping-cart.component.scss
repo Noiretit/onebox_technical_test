@@ -11,4 +11,14 @@
     color: rgb(1, 100, 145);
     -webkit-text-stroke: 1px;
   }
+
+  &__cart {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__go-back {
+    text-align: right;
+    cursor: pointer;
+  }
 }
