@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ConcertCatalogComponent,
   },
   {
-    path: 'shopping-cart',
+    path: 'shopping-cart/:id',
     component: ShoppingCartComponent,
   },
 ];
