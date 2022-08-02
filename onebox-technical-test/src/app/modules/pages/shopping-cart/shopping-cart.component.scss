@@ -1,0 +1,14 @@
+.v-shopping-cart {
+  border: 1px solid black;
+
+  &__availability {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .bi-dash,
+  .bi-plus {
+    color: rgb(1, 100, 145);
+    -webkit-text-stroke: 1px;
+  }
+}
