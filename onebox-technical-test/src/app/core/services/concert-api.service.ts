@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Booked } from '../state/booked-event.model';
 
 @Injectable()
 export class ConcertApiService {
-  public selectedDates: any;
+  public selectedDates: any = [];
 
   constructor(private http: HttpClient) {}
 
